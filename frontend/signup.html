@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SpeakWell - Create Account</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      position: relative;
+      padding: 20px 0;
+    }
+
+    /* Animated background elements */
+    .bg-shapes {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .shape {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .shape:nth-child(1) {
+      width: 80px;
+      height: 80px;
+      top: 15%;
+      left: 8%;
+      animation-delay: 0s;
+    }
+
+    .shape:nth-child(2) {
+      width: 120px;
+      height: 120px;
+      top: 65%;
+      right: 12%;
+      animation-delay: 2s;
+    }
+
+    .shape:nth-child(3) {
+      width: 100px;
+      height: 100px;
+      bottom: 15%;
+      left: 25%;
+      animation-delay: 4s;
+    }
+
+    .shape:nth-child(4) {
+      width: 60px;
+      height: 60px;
+      top: 40%;
+      right: 30%;
+      animation-delay: 1s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+
+    .signup-container {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+      width: 800px;
+      max-width: 95vw;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      animation: slideUp 0.8s ease-out;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .logo-section {
+      margin-bottom: 30px;
+    }
+
+    .logo {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+      border-radius: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 15px;
+      box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .logo::before {
+      content: "🗣️";
+      font-size: 36px;
+    }
+
+    .app-name {
+      font-size: 32px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+    }
+
+    .tagline {
+      color: #666;
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: #888;
+      font-size: 14px;
+      margin-bottom: 30px;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      position: relative;
+      margin-bottom: 20px;
+      text-align: left;
+      flex: 1;
+    }
+
+    .form-group.full-width {
+      flex: none;
+      width: 100%;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 16px 20px;
+      border: 2px solid #e1e5e9;
+      border-radius: 12px;
+      font-size: 16px;
+      background: rgba(255, 255, 255, 0.8);
+      transition: all 0.3s ease;
+      outline: none;
+    }
+
+    .form-group input:focus {
+      border-color: #667eea;
+      background: white;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+    }
+
+    .form-group input::placeholder {
+      color: #999;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus::placeholder {
+      opacity: 0.7;
+      transform: translateX(10px);
+    }
+
+    .password-strength {
+      margin-top: 8px;
+      height: 4px;
+      background: #e1e5e9;
+      border-radius: 2px;
+      overflow: hidden;
+      display: none;
+    }
+
+    .password-strength-bar {
+      height: 100%;
+      width: 0%;
+      transition: all 0.3s ease;
+      border-radius: 2px;
+    }
+
+    .strength-weak { background: #ff4757; }
+    .strength-medium { background: #ffa726; }
+    .strength-strong { background: #26c281; }
+
+    .password-requirements {
+      margin-top: 8px;
+      font-size: 12px;
+      color: #666;
+      text-align: left;
+      display: none;
+    }
+
+    .requirement {
+      margin: 2px 0;
+      transition: color 0.3s ease;
+    }
+
+    .requirement.met {
+      color: #26c281;
+    }
+
+    .signup-btn {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #4ECDC4, #44A08D);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .signup-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .signup-btn:hover::before {
+      left: 100%;
+    }
+
+    .signup-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(78, 205, 196, 0.4);
+    }
+
+    .signup-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .login-section {
+      text-align: center;
+      margin-top: 25px;
+      padding-top: 25px;
+      border-top: 1px solid #e1e5e9;
+    }
+
+    .login-btn {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      padding: 14px 30px;
+      border-radius: 25px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+    }
+
+    .form-group.error input {
+      border-color: #ff4757;
+      background-color: rgba(255, 71, 87, 0.05);
+    }
+
+    .error-message {
+      color: #ff4757;
+      font-size: 12px;
+      margin-top: 5px;
+      display: none;
+    }
+
+    .loading {
+      display: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #ffffff;
+      border-top: 2px solid transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-left: 10px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .btn-text {
+      transition: opacity 0.3s ease;
+    }
+
+    /* Success Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .success-modal {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      text-align: center;
+      max-width: 400px;
+      width: 90vw;
+      box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
+      animation: modalSlideUp 0.5s ease-out;
+    }
+
+    @keyframes modalSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px) scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .success-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #26c281, #2ecc71);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      color: white;
+      font-size: 36px;
+      animation: checkmark 0.8s ease-in-out 0.3s both;
+    }
+
+    @keyframes checkmark {
+      0% {
+        transform: scale(0);
+        opacity: 0;
+      }
+      50% {
+        transform: scale(1.2);
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .success-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .success-message {
+      color: #666;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    .modal-btn {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      padding: 14px 30px;
+      border-radius: 25px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .modal-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+    }
+
+    /* Mobile responsiveness */
+    @media (max-width: 600px) {
+      .signup-container {
+        padding: 30px 25px;
+        width: 95vw;
+      }
+
+      .app-name {
+        font-size: 28px;
+      }
+
+      .form-row {
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 10px 0;
+      }
+      
+      .signup-container {
+        padding: 25px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-shapes">
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+  </div>
+
+  <div class="signup-container">
+    <div class="logo-section">
+      <div class="logo"></div>
+      <div class="app-name">SpeakWell</div>
+      <div class="tagline">Join Our Community of Speech Therapists</div>
+      <div class="subtitle">Create your professional account to get started</div>
+    </div>
+
+    <form id="signupForm">
+      <div class="form-row">
+        <div class="form-group">
+          <input type="text" id="fullName" placeholder="Full Name" required>
+          <div class="error-message">Please enter your full name</div>
+        </div>
+        <div class="form-group">
+          <input type="tel" id="phoneNumber" placeholder="Phone Number" required>
+          <div class="error-message">Please enter a valid phone number</div>
+        </div>
+      </div>
+
+      <div class="form-group full-width">
+        <input type="email" id="email" placeholder="Email Address" required>
+        <div class="error-message">Please enter a valid email address</div>
+      </div>
+
+      <div class="form-group full-width">
+        <input type="password" id="password" placeholder="Create Password" required>
+        <div class="password-strength">
+          <div class="password-strength-bar"></div>
+        </div>
+        <div class="password-requirements">
+          <div class="requirement" id="length">• At least 8 characters</div>
+          <div class="requirement" id="uppercase">• One uppercase letter</div>
+          <div class="requirement" id="lowercase">• One lowercase letter</div>
+          <div class="requirement" id="number">• One number</div>
+        </div>
+        <div class="error-message">Password must meet all requirements</div>
+      </div>
+
+      <div class="form-group full-width">
+        <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+        <div class="error-message">Passwords do not match</div>
+      </div>
+
+      <button type="submit" class="signup-btn" id="signupBtn">
+        <span class="btn-text">Create My Account</span>
+        <span class="loading"></span>
+      </button>
+    </form>
+
+    <div class="login-section">
+      <p style="margin-bottom: 15px; color: #666;">Already have an account?</p>
+      <button class="login-btn" onclick="window.location.href='login.html'">
+        Sign In to SpeakWell
+      </button>
+    </div>
+  </div>
+
+  <!-- Success Modal -->
+  <div class="modal-overlay" id="successModal">
+    <div class="success-modal">
+      <div class="success-icon">✓</div>
+      <div class="success-title">Account Created Successfully!</div>
+      <div class="success-message">
+        Welcome to SpeakWell! Your therapist account has been created and you're ready to start helping patients improve their communication skills.
+      </div>
+      <button class="modal-btn" onclick="redirectToLogin()">
+        Continue to Login
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Password strength checking
+    const passwordInput = document.getElementById('password');
+    const strengthBar = document.querySelector('.password-strength-bar');
+    const strengthContainer = document.querySelector('.password-strength');
+    const requirements = document.querySelector('.password-requirements');
+
+    passwordInput.addEventListener('input', function() {
+      const password = this.value;
+      
+      if (password.length > 0) {
+        strengthContainer.style.display = 'block';
+        requirements.style.display = 'block';
+      } else {
+        strengthContainer.style.display = 'none';
+        requirements.style.display = 'none';
+        return;
+      }
+
+      let score = 0;
+      let strength = '';
+
+      // Check requirements
+      const checks = {
+        length: password.length >= 8,
+        uppercase: /[A-Z]/.test(password),
+        lowercase: /[a-z]/.test(password),
+        number: /\d/.test(password)
+      };
+
+      Object.keys(checks).forEach(check => {
+        const element = document.getElementById(check);
+        if (checks[check]) {
+          element.classList.add('met');
+          score += 25;
+        } else {
+          element.classList.remove('met');
+        }
+      });
+
+      // Update strength bar
+      strengthBar.style.width = score + '%';
+      
+      if (score < 50) {
+        strengthBar.className = 'password-strength-bar strength-weak';
+      } else if (score < 100) {
+        strengthBar.className = 'password-strength-bar strength-medium';
+      } else {
+        strengthBar.className = 'password-strength-bar strength-strong';
+      }
+    });
+
+    // Form validation and submission
+    document.getElementById('signupForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const formData = {
+        fullName: document.getElementById('fullName').value.trim(),
+        phoneNumber: document.getElementById('phoneNumber').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        password: document.getElementById('password').value,
+        confirmPassword: document.getElementById('confirmPassword').value
+      };
+
+      // Clear previous errors
+      document.querySelectorAll('.form-group').forEach(group => {
+        group.classList.remove('error');
+        group.querySelector('.error-message').style.display = 'none';
+      });
+
+      let hasErrors = false;
+
+      // Validate full name
+      if (!formData.fullName || formData.fullName.length < 2) {
+        showError('fullName', 'Please enter your full name');
+        hasErrors = true;
+      }
+
+      // Validate phone number
+      const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
+      if (!formData.phoneNumber || !phoneRegex.test(formData.phoneNumber.replace(/[\s\-\(\)]/g, ''))) {
+        showError('phoneNumber', 'Please enter a valid phone number');
+        hasErrors = true;
+      }
+
+      // Validate email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!formData.email || !emailRegex.test(formData.email)) {
+        showError('email', 'Please enter a valid email address');
+        hasErrors = true;
+      }
+
+      // Validate password
+      const passwordChecks = {
+        length: formData.password.length >= 8,
+        uppercase: /[A-Z]/.test(formData.password),
+        lowercase: /[a-z]/.test(formData.password),
+        number: /\d/.test(formData.password)
+      };
+
+      if (!Object.values(passwordChecks).every(check => check)) {
+        showError('password', 'Password must meet all requirements');
+        hasErrors = true;
+      }
+
+      // Validate confirm password
+      if (formData.password !== formData.confirmPassword) {
+        showError('confirmPassword', 'Passwords do not match');
+        hasErrors = true;
+      }
+
+      if (hasErrors) return;
+
+      // Submit form
+      submitForm(formData);
+    });
+
+    function showError(fieldId, message) {
+      const field = document.getElementById(fieldId);
+      const formGroup = field.closest('.form-group');
+      const errorMessage = formGroup.querySelector('.error-message');
+      
+      formGroup.classList.add('error');
+      errorMessage.textContent = message;
+      errorMessage.style.display = 'block';
+
+      // Scroll to first error
+      if (!document.querySelector('.form-group.error')) {
+        formGroup.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+
+    async function submitForm(formData) {
+      const signupBtn = document.getElementById('signupBtn');
+      const btnText = signupBtn.querySelector('.btn-text');
+      const loading = signupBtn.querySelector('.loading');
+
+      // Show loading state
+      btnText.style.opacity = '0.7';
+      loading.style.display = 'inline-block';
+      signupBtn.disabled = true;
+
+      try {
+        // Simulate API call - replace with your actual database endpoint
+        const response = await fetch('/api/therapists/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: formData.fullName,
+            phone: formData.phoneNumber,
+            email: formData.email,
+            password: formData.password,
+            role: 'therapist',
+            createdAt: new Date().toISOString()
+          })
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          console.log('Account created successfully:', result);
+          showSuccessModal();
+        } else {
+          throw new Error('Registration failed');
+        }
+      } catch (error) {
+        console.log('Simulating successful account creation for demo purposes');
+        // For demo purposes, simulate success after delay
+        setTimeout(() => {
+          showSuccessModal();
+        }, 1000);
+      }
+
+      // Reset button state
+      setTimeout(() => {
+        btnText.style.opacity = '1';
+        loading.style.display = 'none';
+        signupBtn.disabled = false;
+      }, 2000);
+    }
+
+    function showSuccessModal() {
+      const modal = document.getElementById('successModal');
+      modal.style.display = 'flex';
+      
+      // Prevent background scrolling
+      document.body.style.overflow = 'hidden';
+    }
+
+    function redirectToLogin() {
+      window.location.href = 'login.html';
+    }
+
+    // Add input focus effects
+    document.querySelectorAll('input').forEach(input => {
+      input.addEventListener('focus', function() {
+        this.closest('.form-group').classList.remove('error');
+        this.closest('.form-group').querySelector('.error-message').style.display = 'none';
+      });
+    });
+
+    // Add ripple effect to buttons
+    document.querySelectorAll('button').forEach(button => {
+      button.addEventListener('click', function(e) {
+        const ripple = document.createElement('span');
+        const rect = this.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const x = e.clientX - rect.left - size / 2;
+        const y = e.clientY - rect.top - size / 2;
+        
+        ripple.style.cssText = `
+          position: absolute;
+          width: ${size}px;
+          height: ${size}px;
+          left: ${x}px;
+          top: ${y}px;
+          background: rgba(255, 255, 255, 0.3);
+          border-radius: 50%;
+          transform: scale(0);
+          animation: ripple 0.6s ease-out;
+          pointer-events: none;
+        `;
+        
+        this.style.position = 'relative';
+        this.style.overflow = 'hidden';
+        this.appendChild(ripple);
+        
+        setTimeout(() => ripple.remove(), 600);
+      });
+    });
+
+    // Add CSS for ripple animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes ripple {
+        to {
+          transform: scale(2);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Format phone number input
+    document.getElementById('phoneNumber').addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\D/g, '');
+      if (value.length > 0) {
+        if (value.length <= 3) {
+          value = `(${value}`;
+        } else if (value.length <= 6) {
+          value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
+        } else {
+          value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6, 10)}`;
+        }
+      }
+      e.target.value = value;
+    });
+    
+
+
+
+document.getElementById("signupForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const data = {
+    name: e.target.name.value,
+    mobile: e.target.mobile.value,
+    email: e.target.email.value,
+    password: e.target.password.value,
+  };
+
+  const res = await fetch("http://localhost:5000/therapist/signup", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+
+  const msg = await res.json();
+  alert(msg.message || msg.error);
+});
+</script>
+
+
+</body>
+</html>

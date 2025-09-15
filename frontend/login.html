@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SpeakWell - Login</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Animated background elements */
+    .bg-shapes {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .shape {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .shape:nth-child(1) {
+      width: 80px;
+      height: 80px;
+      top: 20%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .shape:nth-child(2) {
+      width: 120px;
+      height: 120px;
+      top: 60%;
+      right: 15%;
+      animation-delay: 2s;
+    }
+
+    .shape:nth-child(3) {
+      width: 100px;
+      height: 100px;
+      bottom: 20%;
+      left: 20%;
+      animation-delay: 4s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+
+    .login-container {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+      width: 800px;
+      max-width: 90vw;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      animation: slideUp 0.8s ease-out;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .logo-section {
+      margin-bottom: 30px;
+    }
+
+    .logo {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+      border-radius: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 15px;
+      box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .logo::before {
+      content: "🗣️";
+      font-size: 36px;
+    }
+
+    .app-name {
+      font-size: 32px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+    }
+
+    .tagline {
+      color: #666;
+      font-size: 16px;
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      position: relative;
+      margin-bottom: 25px;
+      text-align: left;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 16px 20px;
+      border: 2px solid #e1e5e9;
+      border-radius: 12px;
+      font-size: 16px;
+      background: rgba(255, 255, 255, 0.8);
+      transition: all 0.3s ease;
+      outline: none;
+    }
+
+    .form-group input:focus {
+      border-color: #667eea;
+      background: white;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+    }
+
+    .form-group input::placeholder {
+      color: #999;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus::placeholder {
+      opacity: 0.7;
+      transform: translateX(10px);
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .login-btn:hover::before {
+      left: 100%;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 25px 0;
+      color: #999;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, #ddd, transparent);
+    }
+
+    .divider span {
+      padding: 0 20px;
+      font-size: 14px;
+    }
+
+    .social-buttons {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .google-btn {
+      flex: 1;
+      padding: 14px;
+      background: #fff;
+      color: #333;
+      border: 2px solid #e1e5e9;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .google-btn::before {
+      content: "🔗";
+      font-size: 18px;
+    }
+
+    .google-btn:hover {
+      background: #f8f9ff;
+      border-color: #667eea;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .signup-section {
+      text-align: center;
+      margin-top: 25px;
+      padding-top: 25px;
+      border-top: 1px solid #e1e5e9;
+    }
+
+    .signup-btn {
+      background: linear-gradient(135deg, #4ECDC4, #44A08D);
+      color: white;
+      border: none;
+      padding: 14px 30px;
+      border-radius: 25px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .signup-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(78, 205, 196, 0.4);
+    }
+
+    .forgot-password {
+      color: #667eea;
+      text-decoration: none;
+      font-size: 14px;
+      margin-top: 15px;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+
+    .forgot-password:hover {
+      color: #764ba2;
+      text-decoration: underline;
+    }
+
+    /* Mobile responsiveness */
+    @media (max-width: 480px) {
+      .login-container {
+        padding: 30px 25px;
+        width: 95vw;
+      }
+
+      .app-name {
+        font-size: 28px;
+      }
+
+      .social-buttons {
+        flex-direction: column;
+      }
+    }
+
+    /* Loading animation */
+    .loading {
+      display: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #ffffff;
+      border-top: 2px solid transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-left: 10px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .btn-text {
+      transition: opacity 0.3s ease;
+    }
+
+    .form-group.error input {
+      border-color: #ff4757;
+      background-color: rgba(255, 71, 87, 0.05);
+    }
+
+    .error-message {
+      color: #ff4757;
+      font-size: 12px;
+      margin-top: 5px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-shapes">
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+  </div>
+
+  <div class="login-container">
+    <div class="logo-section">
+      <div class="logo"></div>
+      <div class="app-name">SpeakWell</div>
+      <div class="tagline">Empowering Communication Through Technology</div>
+    </div>
+
+    <form id="loginForm">
+      <div class="form-group">
+        <input type="text" id="username" placeholder="Username or Email" required>
+        <div class="error-message">Please enter a valid username or email</div>
+      </div>
+
+      <div class="form-group">
+        <input type="password" id="password" placeholder="Password" required>
+        <div class="error-message">Password must be at least 6 characters</div>
+      </div>
+
+      <button type="submit" class="login-btn" id="loginBtn">
+        <span class="btn-text">Sign In to SpeakWell</span>
+        <span class="loading"></span>
+      </button>
+    </form>
+
+    <a href="#" class="forgot-password">Forgot your password?</a>
+
+    <div class="divider">
+      <span>or continue with</span>
+    </div>
+
+    <div class="social-buttons">
+      <button class="google-btn" onclick="handleGoogleLogin()">
+        Continue with Google
+      </button>
+    </div>
+
+    <div class="signup-section">
+      <p style="margin-bottom: 15px; color: #666;">New to SpeakWell?</p>
+      <button class="signup-btn" onclick="window.location.href='signup.html'">
+        Create Account
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Form validation and submission
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const loginBtn = document.getElementById('loginBtn');
+      const btnText = loginBtn.querySelector('.btn-text');
+      const loading = loginBtn.querySelector('.loading');
+
+      // Clear previous errors
+      document.querySelectorAll('.form-group').forEach(group => {
+        group.classList.remove('error');
+        group.querySelector('.error-message').style.display = 'none';
+      });
+
+      let hasErrors = false;
+
+      // Validate username
+      if (!username || username.length < 3) {
+        showError('username', 'Please enter a valid username or email');
+        hasErrors = true;
+      }
+
+      // Validate password
+      if (!password || password.length < 6) {
+        showError('password', 'Password must be at least 6 characters');
+        hasErrors = true;
+      }
+
+      if (hasErrors) return;
+
+      // Show loading state
+      btnText.style.opacity = '0.7';
+      loading.style.display = 'inline-block';
+      loginBtn.disabled = true;
+
+      // Simulate login process
+      setTimeout(() => {
+        // Reset button state
+        btnText.style.opacity = '1';
+        loading.style.display = 'none';
+        loginBtn.disabled = false;
+
+        // Navigate to dashboard
+        window.location.href = 'dashboard.html';
+      }, 1500);
+    });
+
+    function showError(fieldId, message) {
+      const field = document.getElementById(fieldId);
+      const formGroup = field.closest('.form-group');
+      const errorMessage = formGroup.querySelector('.error-message');
+      
+      formGroup.classList.add('error');
+      errorMessage.textContent = message;
+      errorMessage.style.display = 'block';
+    }
+
+    function handleGoogleLogin() {
+      const googleBtn = document.querySelector('.google-btn');
+      googleBtn.style.opacity = '0.7';
+      googleBtn.disabled = true;
+      
+      setTimeout(() => {
+        window.location.href = 'dashboard.html';
+      }, 1000);
+    }
+
+    // Add input focus effects
+    document.querySelectorAll('input').forEach(input => {
+      input.addEventListener('focus', function() {
+        this.closest('.form-group').classList.remove('error');
+        this.closest('.form-group').querySelector('.error-message').style.display = 'none';
+      });
+    });
+
+    // Add ripple effect to buttons
+    document.querySelectorAll('button').forEach(button => {
+      button.addEventListener('click', function(e) {
+        const ripple = document.createElement('span');
+        const rect = this.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const x = e.clientX - rect.left - size / 2;
+        const y = e.clientY - rect.top - size / 2;
+        
+        ripple.style.cssText = `
+          position: absolute;
+          width: ${size}px;
+          height: ${size}px;
+          left: ${x}px;
+          top: ${y}px;
+          background: rgba(255, 255, 255, 0.3);
+          border-radius: 50%;
+          transform: scale(0);
+          animation: ripple 0.6s ease-out;
+          pointer-events: none;
+        `;
+        
+        this.style.position = 'relative';
+        this.style.overflow = 'hidden';
+        this.appendChild(ripple);
+        
+        setTimeout(() => ripple.remove(), 600);
+      });
+    });
+
+    // Add CSS for ripple animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes ripple {
+        to {
+          transform: scale(2);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>
